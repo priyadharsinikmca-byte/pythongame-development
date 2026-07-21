@@ -1,0 +1,31 @@
+t = (100,200,300,400,500)
+print(t)
+print(t[0])
+
+#packing
+address = ("123 Main St", "Anytown", "CA", 12345)
+for i in address:
+    print(i)
+
+#unpacking
+coordinates = (10, 20)
+x, y = coordinates
+print(x)
+print(y)
+
+my_tuple = 3,4.5,"apple"
+print(my_tuple)
+
+#nested tuple
+tuple1 = (1,2,3,(11,12))
+print(tuple1)
+
+#slicing
+print(tuple1[0:3])
+
+#tuple values cannot be changed
+#tuple1[0] = 1000 
+#print (tuple1)
+
+tuple2 = (11,11,11,11,11,11,11,11)
+print(tuple2.count(11))

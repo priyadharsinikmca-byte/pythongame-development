@@ -1,8 +1,11 @@
 import pgzrun
+import time
 WIDTH=800
 HEIGHT=600
 Sat_x=150
 Sat_y=300
+start_time=time.time()
+game_time=30
 def draw_satellite(x,y):
     screen.draw.filled_rect(Rect((x,y),(250,60)),("blue"))
     screen.draw.filled_rect(Rect((x+55,y+55),(140,50)),("grey"))
@@ -10,16 +13,22 @@ def draw():
     screen.fill("black")
     draw_satellite(Sat_x,Sat_y)
     draw_satellite(500,300)
+    remaining=game_time-int(time.time()-start_time)
+    screen.draw.text("Time" +str(remaining), (10, 10), color="white", fontsize=40)
     if abs(Sat_x-500)<120:
         screen.draw.text("Collision", (300, 100), color="red", fontsize=60)
+    if remaining<=0:
+        screen.draw.text("Game Over", (280,200), color="red", fontsize=60)
 def update():
+    remaining=game_time-int(time.time()-start_time)
     global Sat_x,Sat_y
-    if keyboard.left:
-        Sat_x -= 5
-    if keyboard.right:
-        Sat_x += 5
-    if keyboard.up:
-        Sat_y -= 5
-    if keyboard.down:
-        Sat_y += 5
+    if remaining>0:
+        if keyboard.left:
+         Sat_x -= 5
+        if keyboard.right:
+         Sat_x += 5
+        if keyboard.up:
+         Sat_y -= 5
+        if keyboard.down:
+         Sat_y += 5
 pgzrun.go()

@@ -1,0 +1,25 @@
+import pgzrun
+import random
+WIDTH = 800
+HEIGHT = 600
+score = 0
+current = 0
+questions = []
+with open ("questions.txt", "r") as f:
+    for line in f:
+        q = line.strip().split("|")
+        questions.append(q)
+option1 = Rect((150, 300), (220, 60))
+option2 = Rect((430, 300), (220, 60))
+def draw():
+    screen.clear()
+    screen.fill("lightblue")
+    if current < len(questions):
+        q = questions[current]
+        screen.draw.text(q[0], center=(400,150), fontsize=40, color="black")
+        screen.draw.filled_rect(option1, "black")
+        screen.draw.filled_rect(option2, "green")
+        screen.draw.text(q[1], center=option1.center, fontsize=30, color="white")
+        screen.draw.text(q[2], center=option2.center, fontsize=30, color="white")
+        screen.draw.text(q[3], center=option2.center, fontsize=30, color="white")  
+        screen.draw.text(q[4], center=option2.center, fontsize=30, color="white")

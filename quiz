@@ -23,3 +23,36 @@ def draw():
         screen.draw.text(q[2], center=option2.center, fontsize=30, color="white")
         screen.draw.text(q[3], center=option2.center, fontsize=30, color="white")  
         screen.draw.text(q[4], center=option2.center, fontsize=30, color="white")
+        screen.draw.text("score: " + str(score), topleft=(20,20), fontsize=30, color="red")
+    else:
+        screen.draw.text("Quiz Over!", center=(400, 300), fontsize=60, color="black")
+        screen.draw.text("Final Score: " + str(score), center=(400, 400), fontsize=40, color="black")
+def on_mouse_down(pos):
+    global current, score
+    if current <= len(questions):
+        return
+    if option1.collidepoint(pos):
+        answer = q[1]
+        if answer == q[3]:
+            score += 1
+        current += 1
+    elif option2.collidepoint(pos):
+            answer = q[2]
+            if answer == q[3]:
+                score += 1
+            current += 1
+    if current == len(questions):
+        print("Quiz Over! Final Score: " + str(score))
+pgzrun.go()
+
+
+
+
+
+
+
+
+
+
+
+        

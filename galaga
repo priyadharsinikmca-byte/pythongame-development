@@ -3,7 +3,7 @@ import random
 WIDTH = 1200
 HEIGHT = 600
 bullet = None
-enemy = []
+enemies = []
 score = 0
 lives = 3
 Game_Over = 5
@@ -13,8 +13,71 @@ for i in range (5):
     enemy = Actor("enemy")
     enemy.x = random.randint(50,1150)
     enemy.y = random.randint(50,250)
-    enemy.append(enemy)
+    enemies.append(enemy)
 def draw():
-    screen.fill("dark purple")
+    screen.fill("darkpurple")
     spaceship.draw()
-    
+    if bullet:
+        bullet.draw()
+    for enemy in enemies:
+        enemy.draw()
+    screen.draw.text("Score = "+str(score),(20,20),fontsize=40,color="white")
+    screen.draw.text("Lives = "+str(lives),(20,60),fontsize=40,color="white")
+    if game_over:
+        screen.draw.text("Game Over",centre=(600,300) ,fontsize=70,color="red"))
+def update():
+    global bullet, score, lives, game_over, wait_time
+    if game_over:
+        return
+    if wait_time > 0 :
+        wait_time -= 1
+    if keyboard.left:
+        spaceship.x -= 5
+    if keyboard.right:
+        spaceship.x += 5
+    if keyboard.up:
+        spaceship.y -=5
+    if keyboard.down:
+        spaceship.y +=5
+    if spaceship.left < 0:
+        spaceship.left = 0
+    if spaceship.right > WIDTH:
+        spaceship.right = WIDTH
+    if spaceship.top < 0:
+        spaceship.top = 0
+    if spaceship.bottom > HEIGHT:
+        spaceship.bottom = HEIGHT
+    if bullet:
+        bullet.y -= 10
+        if bullet.bottom < 0:
+            bullet = None
+            wait_time = 30
+    for enemy in enemies:
+        enemy.y += 2
+        if enemy.top > HEIGHT:
+            enemy.y = random.randint(-200, -50)
+            enemy.x = random.randint(50, 1150)
+        if enemy.colliderect(spaceship):
+            lives -= 1
+            enemy.y = random.randint(-200, -50)
+            enemy.x = random.randint(50, 1150)
+            if lives <= 0:
+                game_over = True
+    if bullet:
+        for enemy in enemies:
+            if bullet.colliderect(enemy):
+                score += 10
+                bullet = None
+                enemy.y = random.randint(-200, -50)
+                enemy.x = random.randint(50,1150)
+                wait_time = 30 
+                break
+
+def on_key_down(key):
+     global bullet
+     if key == keys.SPACE:
+         if bullet is None and wait_time == 0 and not game_over:
+             bullet = Actor("bullet")
+             bullet.pos = (spaceship.x, spaceship.y - 50)
+pgzrun.go()
+            

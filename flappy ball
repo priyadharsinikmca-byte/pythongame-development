@@ -1,25 +1,33 @@
+
 import pygame
 import random
 
 pygame.init()
-screen = pygame.display.set_mode((500, 600))
+screen = pygame.display.set_mode((700, 600))
 clock = pygame.time.Clock()
 class Ball:
     def __init__(self):
         self.x = 200
         self.y = 250
         self.speed = 0
+
     def move(self):
-        self.speed += 0.5
+        self.speed += 0.3
+        if self.speed > 5:
+            self.speed = 5
         self.y += self.speed
+
     def jump(self):
         self.speed = -8
+
     def draw(self):
-        pygame.draw.circle(screen,"lightblue",(self.x,int(self.y)),15)
+        pygame.draw.circle(screen, "blue", (self.x, int(self.y)), 15)
 ball = Ball()
 
 pipe_x = 600
 gap = random.randint(150,360)
+lives = 3
+game_over = False
 running = True
 while running:
     screen.fill("lightgreen")
@@ -29,12 +37,20 @@ while running:
           if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             ball.jump()
     ball.move()
-    if pipe_x < -60:
-        pipe_x = 600
-        gap = random.randint(150,360) 
-    pygame.draw.rect(screen,"green",(pipe_x,0,60,gap - 70))
-    pygame.draw.rect(screen,"green",(pipe_x,gap + 70,60,500))
-    ball.draw()
-    pygame.display.update()
-    clock.tick(60)
+    pipe_x -= 3
+    if not game_over:
+        ball.move()
+        pipe_x -= 3
+        if pipe_x < -60:
+            pipe_x = 600
+            gap = random.randint(150,360) 
+        pygame.draw.rect(screen,"green",(pipe_x,0,60,gap - 70))
+        pygame.draw.rect(screen,"green",(pipe_x,gap + 70,60,500))
+        ball.draw()
+        pygame.display.update()
+        clock.tick(60)
+
+
+
+
 pygame.quit()

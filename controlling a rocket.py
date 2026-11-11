@@ -15,16 +15,16 @@ while running:
     screen.fill("black")
     
     for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+          if event.type == pygame.QUIT:
                 running = False
-
-            if event.type == K_DOWN:
+          if event.type == KEYDOWN:
+               if event.type == K_DOWN:
                  y += speed
-            if event.type == K_UP:
+               if event.type == K_UP:
                  y -= speed
-            if event.type == K_LEFT:
+               if event.type == K_LEFT:
                  x -= speed
-            if event.type == K_RIGHT:
+               if event.type == K_RIGHT:
                  x += speed
     screen.blit(rocket, (x, y))
 
